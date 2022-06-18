@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Curso Vue</title>
+  </head>
+  <body>
+    <div id="app">
+      <p>{{ contador }}</p>
+
+      <button v-on:click="somar(5, $event)">Somar 1</button>
+
+      <p v-on:mousemove="atualizaXY">
+        Mouse: {{ x }} e {{y}}
+        <span v-on:mousemove="pararXY">Parar aqui!!!</span>
+        <br />
+        <span v-on:mousemove.stop>Parar aqui 2!!!</span>
+      </p>
+
+      <a
+        v-on:click.prevent=""
+        href="http://goole.com.br"
+        target="_blank"
+        rel="noopener noreferrer"
+        >Goole</a
+      >
+      <br />
+
+      <!-- somente enter -->
+      <input type="text" v-on:keyup.enter="exibirAlerta" />
+
+      <!-- somente alt e enter -->
+      <input type="text" v-on:keyup.enter.alt="exibirAlerta" />
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+    <script>
+      new Vue({
+        el: "#app",
+        data: {
+          contador: 0,
+          x: 0,
+          y: 0,
+        },
+        methods: {
+          somar(passo, event) {
+            console.log(passo, event);
+            this.contador += passo;
+          },
+          atualizaXY(event) {
+            this.x = event.clientX;
+            this.y = event.clientY;
+
+            // console.log(event);
+          },
+          pararXY(e) {
+            e.stopPropagation();
+          },
+          exibirAlerta() {
+            alert("Estou alertando!");
+          },
+        },
+      });
+    </script>
+  </body>
+</html>
