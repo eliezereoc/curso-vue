@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Meu Vue</title>
+  </head>
+  <body>
+    <div id="app">
+      Nome: {{ nome }} {{ sobrenome }} - Smar: {{ 1 + 1 }} - Subtrair: {{ 10 - 4
+      }} - Dividir: {{ 80 / 2 }} - Multiplicar: {{ 4 * 8 }} - Potencia:
+      {{Math.pow(2,3)}}
+    </div>
+
+    <!-- <script src="https://unpkg.com/vue@2"></script> -->
+    <script>
+      function MeuVue(params) {
+        this.$el = document.querySelector(params.el);
+        this.$data = params.data;
+
+        for (let atr in this.$data) {
+          Object.defineProperty(this, atr, {
+            get: () => {
+              return this.$data[atr];
+            },
+            set: (value) => {
+              this.$data[atr] = value;
+            },
+          });
+        }
+
+        //interpolar (regex)
+        const regex = /\{\{([\s\w)(,.+*/-]*)\}\}/g;
+        console.log(this.$el);
+        console.log(this.$data);
+        this.$el.innerHTML = this.$el.innerHTML.replace(regex, (match, $1) => {
+          const value = this[$1.trim()];
+          return value ? value : eval($1);
+        });
+      }
+
+      const vm = new MeuVue({
+        el: "#app",
+        data: {
+          nome: "Eliézer",
+          sobrenome: "Oliveira",
+        },
+      });
+
+      console.log(vm.nome);
+      console.log(vm.$data.nome);
+
+      vm.nome = "Lucas";
+      console.log(vm.$data.nome);
+    </script>
+  </body>
+</html>
