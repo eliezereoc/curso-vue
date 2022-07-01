@@ -23,6 +23,13 @@ npm run build
 
 ```
 
+## Gerar build Eletron
+
+```
+npm run electron:build
+
+```
+
 ## Listar arquivos presets
 
 ```
